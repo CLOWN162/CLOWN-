@@ -1,7 +1,7 @@
 local CONFIG = {
     LIBRARY_URL = "https://raw.githubusercontent.com/deividcomsono/Obsidian/main/Library.lua",
     THEME_URL = "https://raw.githubusercontent.com/deividcomsono/Obsidian/main/addons/ThemeManager.lua",
-    SCRIPT_NAME = "小丑开合"
+    SCRIPT_NAME = "小丑开合 💕"
 }
 
 local function safeLoad(url)
@@ -21,7 +21,7 @@ end
 local Library = safeLoad(CONFIG.LIBRARY_URL)
 
 if not Library then
-    game.Players.LocalPlayer:Kick("无法加载必要库文件，请检查网络连接")
+    game.Players.LocalPlayer:Kick("无法加载必要库文件，请检查网络连接~")
     return
 end
 
@@ -164,7 +164,7 @@ function NumberConverter.ToPinyin(num)
     
     -- 千位
     if thousands > 0 then
-        result = NumberConverter.PinyinDigits[thousands] .. "QIAN"
+        result = result .. NumberConverter.PinyinDigits[thousands] .. "QIAN"
     end
     
     -- 百位
@@ -230,7 +230,7 @@ function NumberConverter.ToEnglish(num, uppercase)
     local remainder = num % 100
     
     if thousands > 0 then
-        result = NumberConverter.EnglishDigits[thousands] .. " " .. NumberConverter.EnglishDigits[1000]
+        result = result .. NumberConverter.EnglishDigits[thousands] .. " " .. NumberConverter.EnglishDigits[1000]
         if hundreds > 0 or remainder > 0 then
             result = result .. " "
         end
@@ -307,7 +307,7 @@ local function executeNormalMode()
             task.wait(config.delay)
         end
         jumpAndSend("DONE")
-        Library:Notify("开合跳完成", 3)
+        Library:Notify("开合跳完成啦~", 3)
         Modes.Normal.running = false
     end)
 end
@@ -377,7 +377,7 @@ local function executeDevilMode()
         end
         
         jumpAndSend("DONE")
-        Library:Notify("魔鬼跳完成", 3)
+        Library:Notify("魔鬼跳完成啦~", 3)
         Modes.Devil.running = false
     end)
 end
@@ -392,7 +392,7 @@ local function executePinyinEnglishMode()
             task.wait(config.delay)
         end
         jumpAndSend("DONE")
-        Library:Notify("拼音+英文完成", 3)
+        Library:Notify("拼音+英文完成啦~", 3)
         Modes.PinyinEnglish.running = false
     end)
 end
@@ -406,7 +406,7 @@ local function executeEnglishMode()
             task.wait(config.delay)
         end
         jumpAndSend("DONE")
-        Library:Notify("英文跳完成", 3)
+        Library:Notify("英文跳完成啦~", 3)
         Modes.English.running = false
     end)
 end
@@ -431,7 +431,7 @@ local function executeEnglishDevilMode()
         end
         
         jumpAndSend("DONE")
-        Library:Notify("英文魔鬼跳完成", 3)
+        Library:Notify("英文魔鬼跳完成啦~", 3)
         Modes.EnglishDevil.running = false
     end)
 end
@@ -439,29 +439,30 @@ end
 -- 创建主界面
 Window = Library:CreateWindow({
     Title = CONFIG.SCRIPT_NAME,
-    Footer = "版本 1.0 | 永久免费 | 作者: CLOWN",
+    Footer = "版本 1.0 | 永久免费 | 作者: CLOWN 💖 | 本脚本完全免费 ⭕️💵的都没有妈",
     Icon = 6026566958,
     NotifySide = "Right",
-    AutoShow = true
+    AutoShow = true,
+    Size = UDim2.new(0, 420, 0, 580) -- 优化窗口大小，更舒适
 })
 
 -- 创建标签页
 MainTabs = {
-    Main = Window:AddTab("开合跳"),
-    Devil = Window:AddTab("魔鬼跳"),
-    PinyinEnglish = Window:AddTab("拼音+英文"),
-    English = Window:AddTab("英文开合跳"),
-    EnglishDevil = Window:AddTab("英文魔鬼跳"),
-    Settings = Window:AddTab("设置")
+    Main = Window:AddTab("🌸 普通开合跳"),
+    Devil = Window:AddTab("😈 魔鬼开合跳"),
+    PinyinEnglish = Window:AddTab("🌐 拼音+英文"),
+    English = Window:AddTab("🇬🇧 英文开合跳"),
+    EnglishDevil = Window:AddTab("👻 英文魔鬼跳"),
+    Settings = Window:AddTab("⚙️ 脚本设置")
 }
 
 -- 开合跳设置
-local normalGroup = MainTabs.Main:AddLeftGroupbox("开合跳设置")
+local normalGroup = MainTabs.Main:AddLeftGroupbox("🌸 基础设置")
 
 normalGroup:AddInput("normal_prefix", {
     Text = "消息后缀",
     Default = "",
-    Placeholder = "例如: ! 或 :)",
+    Placeholder = "例如: ! 或 ✨",
     Callback = function(value)
         Modes.Normal.prefix = value
     end
@@ -494,7 +495,7 @@ normalGroup:AddInput("normal_end", {
 })
 
 normalGroup:AddSlider("normal_delay", {
-    Text = "间隔时间",
+    Text = "动作间隔(s)",
     Default = 2.5,
     Min = 0.5,
     Max = 10,
@@ -504,8 +505,9 @@ normalGroup:AddSlider("normal_delay", {
     end
 })
 
+-- 按钮美化：增加换行和间距
 normalGroup:AddButton({
-    Text = "开始",
+    Text = "▶️ 开始",
     Func = function()
         if not Modes.Normal.running then
             Modes.Normal.running = true
@@ -515,22 +517,22 @@ normalGroup:AddButton({
 })
 
 normalGroup:AddButton({
-    Text = "停止",
+    Text = "⏹️ 停止",
     Func = function()
         if TaskManager:CancelTask("normal") then
             Modes.Normal.running = false
-            Library:Notify("已停止", 2)
+            Library:Notify("已停止~", 2)
         end
     end
 })
 
 -- 魔鬼跳设置
-local devilGroup = MainTabs.Devil:AddLeftGroupbox("魔鬼跳设置")
+local devilGroup = MainTabs.Devil:AddLeftGroupbox("😈 魔鬼模式设置")
 
 devilGroup:AddInput("devil_prefix", {
     Text = "消息后缀",
     Default = "",
-    Placeholder = "例如: ! 或 :)",
+    Placeholder = "例如: ! 或 😈",
     Callback = function(value)
         Modes.Devil.prefix = value
     end
@@ -563,7 +565,7 @@ devilGroup:AddInput("devil_end", {
 })
 
 devilGroup:AddSlider("devil_speed", {
-    Text = "速度",
+    Text = "执行速度",
     Default = 1,
     Min = 0.5,
     Max = 3,
@@ -574,7 +576,7 @@ devilGroup:AddSlider("devil_speed", {
 })
 
 devilGroup:AddSlider("devil_interval", {
-    Text = "字母间隔",
+    Text = "字母间隔(s)",
     Default = 1.2,
     Min = 0.5,
     Max = 3,
@@ -585,7 +587,7 @@ devilGroup:AddSlider("devil_interval", {
 })
 
 devilGroup:AddButton({
-    Text = "开始",
+    Text = "▶️ 开始",
     Func = function()
         if not Modes.Devil.running then
             Modes.Devil.running = true
@@ -595,31 +597,31 @@ devilGroup:AddButton({
 })
 
 devilGroup:AddButton({
-    Text = "停止",
+    Text = "⏹️ 停止",
     Func = function()
         if TaskManager:CancelTask("devil") then
             Modes.Devil.running = false
-            Library:Notify("已停止", 2)
+            Library:Notify("已停止魔鬼模式~", 2)
         end
     end
 })
 
 -- 拼音+英文设置
-local comboGroup = MainTabs.PinyinEnglish:AddLeftGroupbox("拼音+英文设置")
+local comboGroup = MainTabs.PinyinEnglish:AddLeftGroupbox("🌐 双语模式设置")
 
 comboGroup:AddInput("combo_prefix", {
     Text = "消息后缀",
     Default = "",
-    Placeholder = "例如: ! 或 :)",
+    Placeholder = "例如: ! 或 🌐",
     Callback = function(value)
         Modes.PinyinEnglish.prefix = value
     end
 })
 
 comboGroup:AddInput("combo_separator", {
-    Text = "分隔符",
+    Text = "拼音英文分隔符",
     Default = "-",
-    Placeholder = "例如: - 或 =",
+    Placeholder = "例如: - 或 |",
     Callback = function(value)
         Modes.PinyinEnglish.separator = value
     end
@@ -652,7 +654,7 @@ comboGroup:AddInput("combo_end", {
 })
 
 comboGroup:AddSlider("combo_delay", {
-    Text = "间隔时间",
+    Text = "动作间隔(s)",
     Default = 2.5,
     Min = 0.5,
     Max = 10,
@@ -663,7 +665,7 @@ comboGroup:AddSlider("combo_delay", {
 })
 
 comboGroup:AddToggle("combo_uppercase", {
-    Text = "英文大写",
+    Text = "英文大写显示",
     Default = true,
     Callback = function(value)
         Modes.PinyinEnglish.uppercase = value
@@ -671,7 +673,7 @@ comboGroup:AddToggle("combo_uppercase", {
 })
 
 comboGroup:AddButton({
-    Text = "开始",
+    Text = "▶️ 开始",
     Func = function()
         if not Modes.PinyinEnglish.running then
             Modes.PinyinEnglish.running = true
@@ -681,22 +683,22 @@ comboGroup:AddButton({
 })
 
 comboGroup:AddButton({
-    Text = "停止",
+    Text = "⏹️ 停止",
     Func = function()
         if TaskManager:CancelTask("pinyin_english") then
             Modes.PinyinEnglish.running = false
-            Library:Notify("已停止", 2)
+            Library:Notify("已停止双语模式~", 2)
         end
     end
 })
 
 -- 英文开合跳设置
-local englishGroup = MainTabs.English:AddLeftGroupbox("英文开合跳设置")
+local englishGroup = MainTabs.English:AddLeftGroupbox("🇬🇧 英文模式设置")
 
 englishGroup:AddInput("english_prefix", {
     Text = "消息后缀",
     Default = "",
-    Placeholder = "例如: ! 或 :)",
+    Placeholder = "例如: ! 或 🇬🇧",
     Callback = function(value)
         Modes.English.prefix = value
     end
@@ -729,7 +731,7 @@ englishGroup:AddInput("english_end", {
 })
 
 englishGroup:AddSlider("english_delay", {
-    Text = "间隔时间",
+    Text = "动作间隔(s)",
     Default = 2.5,
     Min = 0.5,
     Max = 10,
@@ -740,7 +742,7 @@ englishGroup:AddSlider("english_delay", {
 })
 
 englishGroup:AddToggle("english_uppercase", {
-    Text = "英文大写",
+    Text = "英文大写显示",
     Default = true,
     Callback = function(value)
         Modes.English.uppercase = value
@@ -748,7 +750,7 @@ englishGroup:AddToggle("english_uppercase", {
 })
 
 englishGroup:AddButton({
-    Text = "开始",
+    Text = "▶️ 开始",
     Func = function()
         if not Modes.English.running then
             Modes.English.running = true
@@ -758,22 +760,22 @@ englishGroup:AddButton({
 })
 
 englishGroup:AddButton({
-    Text = "停止",
+    Text = "⏹️ 停止",
     Func = function()
         if TaskManager:CancelTask("english") then
             Modes.English.running = false
-            Library:Notify("已停止", 2)
+            Library:Notify("已停止英文模式~", 2)
         end
     end
 })
 
 -- 英文魔鬼跳设置
-local englishDevilGroup = MainTabs.EnglishDevil:AddLeftGroupbox("英文魔鬼跳设置")
+local englishDevilGroup = MainTabs.EnglishDevil:AddLeftGroupbox("👻 英文魔鬼设置")
 
 englishDevilGroup:AddInput("english_devil_prefix", {
     Text = "消息后缀",
     Default = "",
-    Placeholder = "例如: ! 或 :)",
+    Placeholder = "例如: ! 或 👻",
     Callback = function(value)
         Modes.EnglishDevil.prefix = value
     end
@@ -801,94 +803,96 @@ englishDevilGroup:AddInput("english_devil_end", {
         local num = tonumber(value)
         if num and num >= 1 then
             Modes.EnglishDevil.endAt = num
-        end
-    end
+        结束
+    结束
 })
 
-englishDevilGroup:AddSlider("english_devil_speed", {
-    Text = "速度",
-    Default = 1,
-    Min = 0.5,
-    Max = 3,
-    Rounding = 1,
-    Callback = function(value)
-        Modes.EnglishDevil.speed = value
-    end
+englishdevigroup:add slider("英语魔鬼速度", {
+文本="执行速度",
+默认值=1,
+最小值=0.5,
+最大=3,
+舍入=1,
+回拨=功能(值)
+模式。速度=价值
+    结束
 })
 
-englishDevilGroup:AddToggle("english_devil_uppercase", {
-    Text = "英文大写",
-    Default = true,
-    Callback = function(value)
-        Modes.EnglishDevil.uppercase = value
+englishdevigroup:add toggle("英语_魔鬼_大写", {
+文本="英文大写显示",
+默认值=真实的,
+回拨=功能(值)
+模式。EnglishDevil.uppercase =值
+    结束
+})
+
+englishdevigroup:add button({
+文本="▶️ 开始",
+Func =功能()
+        如果 不模式。英语魔鬼.跑步然后
+模式。EnglishDevil.running =真实的
+executeEnglishDevilMode()
+        结束
     end
 })
 
 englishDevilGroup:AddButton({
-    Text = "开始",
-    Func = function()
-        if not Modes.EnglishDevil.running then
-            Modes.EnglishDevil.running = true
-            executeEnglishDevilMode()
-        end
-    end
-})
-
-englishDevilGroup:AddButton({
-    Text = "停止",
+    Text = "⏹️ 停止",
     Func = function()
         if TaskManager:CancelTask("english_devil") then
             Modes.EnglishDevil.running = false
-            Library:Notify("已停止", 2)
+            Library:Notify("已停止英文魔鬼模式~", 2)
         end
     end
 })
 
 -- 脚本设置
-local settingsGroup = MainTabs.Settings:AddLeftGroupbox("脚本设置")
+local settingsGroup = MainTabs.Settings:AddLeftGroupbox("⚙️ 脚本信息")
 
-settingsGroup:AddLabel("脚本信息")
-settingsGroup:AddLabel("名称: " .. CONFIG.SCRIPT_NAME)
-settingsGroup:AddLabel("版本: 1.0")
-settingsGroup:AddLabel("作者: CLOWN")
-settingsGroup:AddLabel("状态: ✅ 永久免费")
+settingsGroup:AddLabel("📌 脚本名称: " .. CONFIG.SCRIPT_NAME)
+settingsGroup:AddLabel("📌 版本号: 1.0")
+settingsGroup:AddLabel("📌 作者: CLOWN")
+settingsGroup:AddLabel("📌 状态: ✅ 永久免费")
+settingsGroup:AddLabel("📌 公告: 本脚本完全免费 ⭕️💵的都没有妈")
 
 settingsGroup:AddDivider()
 
 settingsGroup:AddButton({
-    Text = "紧急停止所有任务",
+    Text = "🛑 紧急停止所有任务",
     Func = function()
         TaskManager:CancelAll()
         for mode, _ in pairs(Modes) do
             if type(Modes[mode]) == "table" then
-                Modes[mode].running = false
-            end
-        end
-        Library:Notify("所有任务已停止", 3)
-    end
+错误的
+            结束
+        结束
+库:通知("所有任务都停止啦~", 3)
+    结束
 })
 
-settingsGroup:AddButton({
-    Text = "卸载脚本",
-    Func = function()
-        TaskManager:CancelAll()
-        if Library.Unload then
-            Library.Unload()
-        elseif Library.Destroy then
-            Library.Destroy()
-        end
-    end
+设置组:添加按钮({
+文本="🗑️ 卸载脚本",
+Func =功能()
+TaskManager:CancelAll()
+        如果图书馆。倾销然后
+图书馆。卸载()
+        埃尔塞夫图书馆。破坏然后
+图书馆。销毁()
+        结束
+    结束
 })
 
 -- 应用主题管理器
-local ThemeManager = safeLoad(CONFIG.THEME_URL)
-if ThemeManager then
-    ThemeManager:SetLibrary(Library)
-    ThemeManager:ApplyToTab(MainTabs.Settings)
-end
+当地的ThemeManager =安全负载(配置。主题_网址)
+如果主题管理器然后
+ThemeManager:SetLibrary(库)
+主题管理器:applytob(MainTabs。设置)
+结束
 
 -- 初始化完成提示
-Library:Notify("小丑开合脚本加载完成！", 3)
+库:通知("💕 小丑开合脚本加载成功啦！", 3)
 
 -- 设置默认选中的标签页
-Window:SelectTab(1)
+窗口:选择选项卡(1)
+
+
