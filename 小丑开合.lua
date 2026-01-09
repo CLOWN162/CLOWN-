@@ -803,36 +803,36 @@ englishDevilGroup:AddInput("english_devil_end", {
         local num = tonumber(value)
         if num and num >= 1 then
             Modes.EnglishDevil.endAt = num
-        结束
-    结束
+        end
+    end
 })
 
-englishdevigroup:add slider("英语魔鬼速度", {
-文本="执行速度",
-默认值=1,
-最小值=0.5,
-最大=3,
-舍入=1,
-回拨=功能(值)
-模式。速度=价值
-    结束
+englishDevilGroup:AddSlider("english_devil_speed", {
+    Text = "执行速度",
+    Default = 1,
+    Min = 0.5,
+    Max = 3,
+    Rounding = 1,
+    Callback = function(value)
+        Modes.EnglishDevil.speed = value
+    end
 })
 
-englishdevigroup:add toggle("英语_魔鬼_大写", {
-文本="英文大写显示",
-默认值=真实的,
-回拨=功能(值)
-模式。EnglishDevil.uppercase =值
-    结束
+englishDevilGroup:AddToggle("english_devil_uppercase", {
+    Text = "英文大写显示",
+    Default = true,
+    Callback = function(value)
+        Modes.EnglishDevil.uppercase = value
+    end
 })
 
-englishdevigroup:add button({
-文本="▶️ 开始",
-Func =功能()
-        如果 不模式。英语魔鬼.跑步然后
-模式。EnglishDevil.running =真实的
-executeEnglishDevilMode()
-        结束
+englishDevilGroup:AddButton({
+    Text = "▶️ 开始",
+    Func = function()
+        if not Modes.EnglishDevil.running then
+            Modes.EnglishDevil.running = true
+            executeEnglishDevilMode()
+        end
     end
 })
 
@@ -863,36 +863,34 @@ settingsGroup:AddButton({
         TaskManager:CancelAll()
         for mode, _ in pairs(Modes) do
             if type(Modes[mode]) == "table" then
-错误的
-            结束
-        结束
-库:通知("所有任务都停止啦~", 3)
-    结束
+                Modes[mode].running = false
+            end
+        end
+        Library:Notify("所有任务都停止啦~", 3)
+    end
 })
 
-设置组:添加按钮({
-文本="🗑️ 卸载脚本",
-Func =功能()
-TaskManager:CancelAll()
-        如果图书馆。倾销然后
-图书馆。卸载()
-        埃尔塞夫图书馆。破坏然后
-图书馆。销毁()
-        结束
-    结束
+settingsGroup:AddButton({
+    Text = "🗑️ 卸载脚本",
+    Func = function()
+        TaskManager:CancelAll()
+        if Library.Unload then
+            Library.Unload()
+        elseif Library.Destroy then
+            Library.Destroy()
+        end
+    end
 })
 
 -- 应用主题管理器
-当地的ThemeManager =安全负载(配置。主题_网址)
-如果主题管理器然后
-ThemeManager:SetLibrary(库)
-主题管理器:applytob(MainTabs。设置)
-结束
+local ThemeManager = safeLoad(CONFIG.THEME_URL)
+if ThemeManager then
+    ThemeManager:SetLibrary(Library)
+    ThemeManager:ApplyToTab(MainTabs.Settings)
+end
 
 -- 初始化完成提示
-库:通知("💕 小丑开合脚本加载成功啦！", 3)
+Library:Notify("💕 小丑开合脚本加载成功啦！", 3)
 
 -- 设置默认选中的标签页
-窗口:选择选项卡(1)
-
-
+Window:SelectTab(1)
